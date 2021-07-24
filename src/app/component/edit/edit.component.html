@@ -1,0 +1,125 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body align-items-center">
+      <h5 class="card-title text-center"><b>Booking Form</b></h5>
+      <br/>
+      <form  [formGroup]="myForm" #formData =ngForm novalidate>
+        <div class="form-row">
+          <div class="align-items-center ml-5">
+            <mat-radio-group aria-labelledby="example-radio-group-label" (change)="tripType($event)" formControlName="tripType" class="example-radio-group">
+              <mat-radio-button class="example-radio-button" *ngFor="let season of radiobtns2"  [value]="season">
+              {{season}}
+              </mat-radio-button>
+</mat-radio-group>
+          </div>
+        </div> 
+        <br/>
+        <div class="form-row">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+             <mat-select [(ngModel)]="fCity"  [ngModelOptions]="{standalone: true}" placeholder="Select City"  style="font-family: 'Times New Roman', Times, serif;"  formControlName="fromPlace">
+               <mat-option class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" value="">Select City</mat-option>
+               <mat-option  class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" *ngFor="let val of fromPlaces" value={{val}}>{{val}}
+               </mat-option>
+             </mat-select>
+            </mat-form-field>
+          </div>
+            <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+               <mat-select [(ngModel)]="tCity"  [ngModelOptions]="{standalone: true}" placeholder="Select Destination City"  style="font-family: 'Times New Roman', Times, serif;"  formControlName="toPlace">
+                 <mat-option class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" value="">Select Destination City</mat-option>
+                 <mat-option  class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" *ngFor="let val of toPlaces" value={{val}}>{{val}}
+                 </mat-option>
+               </mat-select>
+              </mat-form-field>
+            </div>
+            <span *ngIf="fCity === tCity"><i class="text-danger">You've selected same city</i></span>
+       </div>
+       <div class="form-row">
+        <div class="col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput [min]="minDate" [(ngModel)]="toMinDate" [ngModelOptions]="{standalone : true}" [matDatepicker]="startpicker" matTooltip="Travel Date" formControlName="fromDate" placeholder="Travel Date">
+            <mat-datepicker-toggle matSuffix [for]="startpicker" ></mat-datepicker-toggle>
+            <mat-datepicker #startpicker ></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div *ngIf="!hideTo" class="col-md-6">
+          <mat-form-field class="example-full-width">
+            <input matInput [min]="toMinDate" [matDatepicker]="startpicker2" matTooltip="Return Date" formControlName="toDate" placeholder="Return Date">
+            <mat-datepicker-toggle matSuffix [for]="startpicker2" ></mat-datepicker-toggle>
+            <mat-datepicker #startpicker2 ></mat-datepicker>
+          </mat-form-field>
+        </div>
+       </div>
+       <div class="form-row">
+             <div class="col-md-6">
+              <mat-form-field class="example-full-width">
+               <mat-select placeholder="Select Flight"  style="font-family: 'Times New Roman', Times, serif;"  formControlName="flight_name">
+                 <mat-option class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" value="">Select Flight</mat-option>
+                 <mat-option  class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" *ngFor="let val of flightNames" value={{val}}>{{val}}
+                 </mat-option>
+               </mat-select>
+              </mat-form-field>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                 <mat-select placeholder="Availability"  style="font-family: 'Times New Roman', Times, serif;"  formControlName="timing">
+                   <mat-option class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" value="">Select Time</mat-option>
+                   <mat-option  class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" *ngFor="let val of timings" value={{val}}>{{val}}
+                   </mat-option>
+                 </mat-select>
+                </mat-form-field>
+                </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-6">
+                <mat-checkbox [(ngModel)]="pcount"  [ngModelOptions]="{standalone: true}" (change)="pCount($event)" formControlName="count">More than 1 passenger ?</mat-checkbox>
+                </div>
+                <div class="col-md-6">
+                  <mat-label>Luggage : </mat-label>
+                  <mat-radio-group aria-labelledby="example-radio-group-label" formControlName="luggage" class="example-radio-group">
+  <mat-radio-button class="example-radio-button" *ngFor="let season of radiobtns"  [value]="season">
+    {{season}}
+  </mat-radio-button>
+</mat-radio-group>
+                </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Passenger Name</mat-label>
+                  <input matInput placeholder="First Passenger Name" formControlName="passenger_name1">
+                </mat-form-field>
+              </div>
+              <div *ngIf="pcount" class="col-md-6">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Passenger Name 2</mat-label>
+                  <input matInput placeholder="Second Passenger Name" formControlName="passenger_name2">
+                </mat-form-field>
+              </div>
+            </div>
+            <br/>
+            <br/>
+        <div class="form-row">
+          <button type="submit" class="btn btn-success col-md-3" [disabled]="!formData.valid" (click)="submit()">Update</button>
+          <button class="btn btn-danger col-md-3" [disabled]="!formData.valid" (click)="delete()">Cancel Booking</button>
+
+
+
+        </div>
+
+
+
+
+      </form>
+
+    </div>
+  </div>
+
+
+
+</div>
+
+
+
+

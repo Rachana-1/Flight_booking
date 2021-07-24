@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="card-body">
+    <h3 *ngIf="btnValue" class="card-title text-center">Login</h3>
+    <h3 *ngIf="!btnValue" class="card-title text-center">Sign Up</h3>
+    <button class="btn btn-primary" (click)="loginOrSignup()">{{btnValues}}</button>
+    <form *ngIf="btnValue" [formGroup]="myForm" #formData = ngForm novalidate>
+      <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" placeholder="user name"
+            formControlName="email">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" placeholder="password" formControlName="pwd">
+          </div>
+        </div>
+        <div class="row float-right">
+            <button type="submit" class="btn btn-success align-items-last" (click)="loggedIn()" [disabled]="!formData.valid">Submit</button>
+        </div>
+
+  </form>
+  <form *ngIf="!btnValue" [formGroup]="myForm" #formData = ngForm novalidate>
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Name</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" placeholder="Name"
+        formControlName="uName">
+      </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+          <input type="email" class="form-control" placeholder="Email"
+          formControlName="email">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+          <input type="password" class="form-control" placeholder="password" formControlName="pwd">
+        </div>
+      </div>
+      <div class="row float-right">
+          <button type="submit" class="btn btn-success align-items-last" (click)="SignUp()" [disabled]="!formData.valid">Submit</button>
+      </div>
+
+</form>
+  </div>
+
+</div>
+

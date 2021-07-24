@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top shadow">
+    <a class="navbar-brand" [routerLink]="['/home']"><fa-icon [icon]="['fas', 'home']"></fa-icon> D-AirBnB</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/new']">New Booking<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/details']">Booking Details<span class="sr-only">(current)</span></a>
+        </li>
+        <!-- <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/lazyuser']">Lazy Load Example <span class="sr-only">(current)</span></a>
+        </li> -->
+      </ul>
+
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class= "navbar-nav ml-auto">
+            <!-- <form class="form-inline">
+                <input class="form-control" type="search" placeholder="Search" (change)="search($event)" aria-label="Search">
+              </form> -->
+            <li class="nav-item dropdown" ngbDropdown display="dynamic">
+
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <fa-icon class="text-success active cursor" [icon]="['fas', 'user']"></fa-icon>
+                    <span class="active cursor text-left text-white" role="status"> {{uname}}</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a [routerLink]="['/profile']" class="dropdown-item text-info">Profile</a>
+                    <a [routerLink]="['/login']" class="dropdown-item text-danger" (click)="logOut()">Logout</a>
+                  </div>
+            </li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>

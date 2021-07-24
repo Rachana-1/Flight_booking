@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+$custom-typography: mat-typography-config(
+  $font-family: 'Times New Roman'
+);
+
+@include angular-material-typography($custom-typography);
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+.example-header{
+  width: 40% !important;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: #212529 !important;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Times New Roman', Times, serif; }
+
+
+
