@@ -1,0 +1,210 @@
+<div class="center-padding mat-elevation-z8">
+
+        <fieldset class="border p-10" style="border-color:orangered">
+          <mat-tab-group>
+            <mat-tab label="Table Data">
+          <div class="row col-md-6 ml-2">
+            <div class="example-header">
+              <mat-grid-list>
+                <mat-grid-tile>
+                  <mat-form-field>
+              <input matInput (keyup)="applyFilter($event.target.value)"  placeholder="Search">
+                  </mat-form-field>
+                </mat-grid-tile>
+              </mat-grid-list>
+          </div>
+
+        </div> 
+            <mat-table class="shadow" #table [dataSource]="dataSource" matSort >
+
+                <ng-container matColumnDef="_id">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+                  <mat-cell *matCellDef="let opt"><a class="btn btn-sm btn-outline-secondary" [routerLink]="['/edit', opt._id]">Edit </a></mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="tripType">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Type of Trip</mat-header-cell>
+                  <mat-cell *matCellDef="let opt">{{opt.tripType}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                  <mat-cell *matCellDef="let opt">{{opt.status}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="fromDate">
+                  <mat-header-cell *matHeaderCellDef>Travel Date</mat-header-cell>
+                  <mat-cell *matCellDef="let opt">{{opt.fromDate | date}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="toDate">
+                  <mat-header-cell *matHeaderCellDef>Return Date</mat-header-cell>
+                  <mat-cell *matCellDef="let opt">{{opt.toDate | date}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="fromPlace">
+                  <mat-header-cell *matHeaderCellDef>Boarding City</mat-header-cell>
+                  <mat-cell *matCellDef="let opt">{{opt.fromPlace}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="toPlace">
+                  <mat-header-cell *matHeaderCellDef>Destination</mat-header-cell>
+                  <mat-cell *matCellDef="let opt">{{opt.toPlace}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="flight_name">
+                  <mat-header-cell *matHeaderCellDef>Airways</mat-header-cell>
+                  <mat-cell *matCellDef="let opt">{{opt.flight_name}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="timing">
+                  <mat-header-cell *matHeaderCellDef>Time</mat-header-cell>
+                  <mat-cell *matCellDef="let opt">{{opt.timing}}</mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="colValue"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: colValue;"></mat-row>
+              </mat-table>
+              <mat-paginator #MatPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 30]" [showFirstLastButtons]="true"></mat-paginator>
+          </mat-tab>
+          <mat-tab label="Expansion Panel Data">
+            <mat-accordion>
+              <mat-expansion-panel *ngFor="let item of details">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{item.user_email}}
+                  </mat-panel-title>
+                  <mat-panel-description >
+                    <div style="text-align: right;">
+                      {{details.indexOf(item) + 1}}
+                    </div>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div><mat-label> From Place : </mat-label>
+                  {{item.fromPlace}}
+                </div>
+                <div><mat-label> To Place : </mat-label>
+                  {{item.toPlace}}
+                </div>
+                <!-- <div *ngFor = "let myFormEle of myForm">
+                  <form  [formGroup]="myFormEle" #formData =ngForm novalidate>
+                    <div class="form-row">
+                      <div class="align-items-center ml-5">
+                        <mat-radio-group aria-labelledby="example-radio-group-label" (change)="tripType($event)" formControlName="tripType" class="example-radio-group">
+                          <mat-radio-button class="example-radio-button" *ngFor="let season of radiobtns2"  [value]="season">
+                          {{season}}
+                          </mat-radio-button>
+            </mat-radio-group>
+                      </div>
+                    </div>
+                    <br/>
+                    <div class="form-row">
+                      <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                         <mat-select [(ngModel)]="fCity"  [ngModelOptions]="{standalone: true}" placeholder="Select City"  style="font-family: 'Times New Roman', Times, serif;"  formControlName="fromPlace">
+                           <mat-option class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" value="">Select City</mat-option>
+                           <mat-option  class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" *ngFor="let val of fromPlaces" value={{val}}>{{val}}
+                           </mat-option>
+                         </mat-select>
+                        </mat-form-field>
+                      </div>
+                        <div class="col-md-6">
+                          <mat-form-field class="example-full-width">
+                           <mat-select [(ngModel)]="tCity"  [ngModelOptions]="{standalone: true}" placeholder="Select Destination City"  style="font-family: 'Times New Roman', Times, serif;"  formControlName="toPlace">
+                             <mat-option class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" value="">Select Destination City</mat-option>
+                             <mat-option  class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" *ngFor="let val of toPlaces" value={{val}}>{{val}}
+                             </mat-option>
+                           </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <span *ngIf="fCity === tCity"><i class="text-danger">You've selected same city</i></span>
+                   </div>
+                   <div class="form-row">
+                    <div class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <input matInput [min]="minDate" [(ngModel)]="toMinDate" [ngModelOptions]="{standalone : true}" [matDatepicker]="startpicker" matTooltip="Travel Date" formControlName="fromDate" placeholder="Travel Date">
+                        <mat-datepicker-toggle matSuffix [for]="startpicker" ></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker ></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                    <div *ngIf="!hideTo" class="col-md-6">
+                      <mat-form-field class="example-full-width">
+                        <input matInput [min]="toMinDate" [matDatepicker]="startpicker2" matTooltip="Return Date" formControlName="toDate" placeholder="Return Date">
+                        <mat-datepicker-toggle matSuffix [for]="startpicker2" ></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker2 ></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                   </div>
+                   <div class="form-row">
+                         <div class="col-md-6">
+                          <mat-form-field class="example-full-width">
+                           <mat-select placeholder="Select Flight"  style="font-family: 'Times New Roman', Times, serif;"  formControlName="flight_name">
+                             <mat-option class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" value="">Select Flight</mat-option>
+                             <mat-option  class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" *ngFor="let val of flightNames" value={{val}}>{{val}}
+                             </mat-option>
+                           </mat-select>
+                          </mat-form-field>
+                          </div>
+                          <div class="col-md-6">
+                            <mat-form-field class="example-full-width">
+                             <mat-select placeholder="Availability"  style="font-family: 'Times New Roman', Times, serif;"  formControlName="timing">
+                               <mat-option class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" value="">Select Time</mat-option>
+                               <mat-option  class="mat-primary"style="font-family: 'Times New Roman', Times, serif;" *ngFor="let val of timings" value={{val}}>{{val}}
+                               </mat-option>
+                             </mat-select>
+                            </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="col-md-6">
+                            <mat-checkbox [(ngModel)]="pcount"  [ngModelOptions]="{standalone: true}" (change)="pCount($event)" formControlName="count">More than 1 passenger ?</mat-checkbox>
+                            </div>
+                            <div class="col-md-6">
+                              <mat-label>Luggage : </mat-label>
+                              <mat-radio-group aria-labelledby="example-radio-group-label" formControlName="luggage" class="example-radio-group">
+              <mat-radio-button class="example-radio-button" *ngFor="let season of radiobtns"  [value]="season">
+                {{season}}
+              </mat-radio-button>
+            </mat-radio-group>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="col-md-6">
+                            <mat-form-field class="example-full-width">
+                              <mat-label>Passenger Name</mat-label>
+                              <input matInput placeholder="First Passenger Name" formControlName="passenger_name1">
+                            </mat-form-field>
+                          </div>
+                          <div *ngIf="pcount" class="col-md-6">
+                            <mat-form-field class="example-full-width">
+                              <mat-label>Passenger Name 2</mat-label>
+                              <input matInput placeholder="Second Passenger Name" formControlName="passenger_name2">
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        <br/>
+                        <br/>
+                    <div class="form-row">
+                      <button type="submit" class="btn btn-success col-md-3" [disabled]="!formData.valid" (click)="submit()">Update</button>
+                      <button class="btn btn-danger col-md-3" [disabled]="!formData.valid" (click)="delete()">Cancel Booking</button>
+
+
+
+                    </div>
+
+
+
+
+                  </form>
+                </div> -->
+                <!-- <div><mat-label> Email : </mat-label>
+                  {{item.email}}
+                </div>
+                <div><mat-label> Created Date : </mat-label>
+                  {{item.update_dt}}
+                </div> -->
+
+              </mat-expansion-panel>
+
+            </mat-accordion>
+
+          </mat-tab>
+          </mat-tab-group>
+        </fieldset>
+
+
+
+
+  </div>
